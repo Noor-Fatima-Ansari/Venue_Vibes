@@ -10,17 +10,38 @@ class PictureDecor extends StatefulWidget {
 }
 
 class _PictureDecorState extends State<PictureDecor> {
+  List<String> Apics = [
+    "images/hyd.png",
+    "images/karachi.png",
+    "images/Islamabad.png",
+    "images/lahore.png"
+  ];
+  List<String> Atitle = ["Hyderabad", "Karachi", "Islamabad", "Lahore"];
+  List<String> Epics = [
+    "images/graduation.png",
+    "images/wedding.png",
+    "images/christmas.png",
+    "images/baby.png",
+    "images/bachelor.png"
+        "images/birthday.png"
+  ];
+  List<String> Etitle = [
+    "Graduation Celebration",
+    "Wedding Celebration",
+    "Christmas Celebration",
+    "Baby Shower",
+    "Bachlor celebration",
+    "Birthday celebration"
+  ];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
-          padding:
-              const EdgeInsets.all(16.0), // Increased padding for aesthetics
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-                CrossAxisAlignment.stretch, // Stretched to fill the width
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Center(
                 child: Text(
@@ -32,7 +53,7 @@ class _PictureDecorState extends State<PictureDecor> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Consistent spacing
+              const SizedBox(height: 20),
               const Text(
                 "Budget",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -75,11 +96,11 @@ class _PictureDecorState extends State<PictureDecor> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Consistent spacing
-              Specify().buildCardList("Choose Area"),
-              const SizedBox(height: 20), // Consistent spacing
-              Specify().buildCardList("Event Type"),
-              const SizedBox(height: 20), // Consistent spacing
+              const SizedBox(height: 20),
+              Specify().buildCardListArea("Choose Area", Apics, Atitle),
+              const SizedBox(height: 20),
+              Specify().buildCardListEvent("Event Type", Epics, Etitle),
+              const SizedBox(height: 20),
               Container(
                 height: 150,
                 decoration: BoxDecoration(
@@ -95,7 +116,7 @@ class _PictureDecorState extends State<PictureDecor> {
                       style:
                           TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 20), // Consistent spacing
+                    const SizedBox(height: 20),
                     Center(
                       child: FloatingActionButton(
                         mini: true,
@@ -109,7 +130,7 @@ class _PictureDecorState extends State<PictureDecor> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20), // Consistent spacing
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -125,7 +146,7 @@ class _PictureDecorState extends State<PictureDecor> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Consistent spacing
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -133,89 +154,3 @@ class _PictureDecorState extends State<PictureDecor> {
     );
   }
 }
-
-// class PictureDecor extends StatefulWidget {
-//   const PictureDecor({super.key, required this.onNavigate});
-
-//   @override
-//   State<PictureDecor> createState() => _PictureDecorState();
-// }
-
-// class _PictureDecorState extends State<PictureDecor> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SingleChildScrollView(
-//       child: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: [
-//               const Center(
-//                 child: Text(
-//                   "Venue Vibes",
-//                   style: TextStyle(
-//                     fontSize: 24,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.orangeAccent,
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-//               const Text(
-//                 "Budget",
-//                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//               ),
-//               const SizedBox(height: 8),
-//               Container(
-//                 height: 150,
-//                 decoration: BoxDecoration(
-//                   color: Colors.purple[50],
-//                   borderRadius: BorderRadius.circular(12),
-//                 ),
-//                 child: Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: Row(
-//                     children: [
-//                       Expanded(
-//                         child: TextField(
-//                           decoration: InputDecoration(
-//                             hintText: "Enter your budget for Place",
-//                             border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.circular(12),
-//                             ),
-//                           ),
-//                           keyboardType: TextInputType.number,
-//                         ),
-//                       ),
-//                       const SizedBox(width: 8),
-//                       ElevatedButton(
-//                         onPressed: () {
-//                           // Add set budget logic
-//                         },
-//                         style: ElevatedButton.styleFrom(
-//                           padding: const EdgeInsets.symmetric(
-//                               vertical: 16, horizontal: 24),
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                         ),
-//                         child: const Text("Set Budget"),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 30),
-//               ElevatedButton(
-//                 onPressed: () {},
-//                 child: const Text("Switch to Food Estimation"),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
