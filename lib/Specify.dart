@@ -103,16 +103,13 @@ class Specify {
           height: 150,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount:
-                pictureList.length, // Ensures the lists have matching lengths
+            itemCount: pictureList.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    // Handle the unique onTap for each index
                     print('Card ${titleList[index]} tapped');
-                    // Add specific functionality for each index here
                   },
                   child: Container(
                     width: 90,
@@ -122,25 +119,22 @@ class Specify {
                     ),
                     child: Stack(
                       children: [
-                        // Background image
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
-                            pictureList[index], // Use image from picture list
+                            pictureList[index],
                             width: 90,
                             height: 150,
-                            fit: BoxFit.cover, // Cover the whole container
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        // Title at the bottom
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             height: 20,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(
-                                  0.5), // Semi-transparent background for the text
+                              color: Colors.black.withOpacity(0.5),
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(12),
                                 bottomRight: Radius.circular(12),
@@ -148,7 +142,7 @@ class Specify {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
                             child: Text(
-                              titleList[index], // Title from the title list
+                              titleList[index],
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 7,
@@ -187,16 +181,13 @@ class Specify {
           height: 150,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount:
-                pictureList.length, // Ensures the lists have matching lengths
+            itemCount: pictureList.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    // Handle the unique onTap for each index
                     print('Card ${titleList[index]} tapped');
-                    // Add specific functionality for each index here
                   },
                   child: Container(
                     width: 90,
@@ -206,25 +197,22 @@ class Specify {
                     ),
                     child: Stack(
                       children: [
-                        // Background image
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
-                            pictureList[index], // Use image from picture list
+                            pictureList[index],
                             width: 90,
                             height: 150,
-                            fit: BoxFit.cover, // Cover the whole container
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        // Title at the bottom
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             height: 20,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(
-                                  0.5), // Semi-transparent background for the text
+                              color: Colors.black.withOpacity(0.5),
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(12),
                                 bottomRight: Radius.circular(12),
@@ -232,7 +220,7 @@ class Specify {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
                             child: Text(
-                              titleList[index], // Title from the title list
+                              titleList[index],
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 7,

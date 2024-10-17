@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:venue_vibes/authService.dart';
+import 'package:venue_vibes/decor.dart';
 import 'package:venue_vibes/login.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -12,6 +14,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  AuthService authService = AuthService();
 
   // Validator functions
   String? _validateEmail(String? value) {
@@ -74,36 +77,40 @@ class _SignupScreenState extends State<SignupScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          foregroundColor: Color(0xFF81717A),
-                        ),
-                        child: const Text(
-                          'SignUp',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40,
-                            decoration: TextDecoration.underline,
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            foregroundColor: Color(0xFF81717A),
+                          ),
+                          child: const Text(
+                            'SignUp',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 40,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(width: 350),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                            foregroundColor: Color(0xFF81717A)),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40,
+                      SizedBox(width: 30),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                              foregroundColor: Color(0xFF81717A)),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 40,
+                            ),
                           ),
                         ),
                       ),
@@ -163,9 +170,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // Process data
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Sign up successful')));
+                          authService
+                              .singUp(
+                                  emailController.text, passwordController.text)
+                              .then((user) {
+                            if (user != null) {
+                              Navigator.push(
+                                  (context),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Decor(key: Decor.decorKey)));
+                            }
+                          });
                         }
                       },
                       child: Text(

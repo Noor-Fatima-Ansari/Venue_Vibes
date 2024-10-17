@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:venue_vibes/decor.dart';
+import 'package:venue_vibes/login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -30,9 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     Timer(
         const Duration(seconds: 2),
         () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Decor(key: Decor.decorKey))));
+            context, MaterialPageRoute(builder: (context) => LoginScreen())));
   }
 
   @override

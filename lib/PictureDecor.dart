@@ -22,8 +22,8 @@ class _PictureDecorState extends State<PictureDecor> {
     "images/wedding.png",
     "images/christmas.png",
     "images/baby.png",
-    "images/bachelor.png"
-        "images/birthday.png"
+    "images/bachelor.png",
+    "images/birthday.png"
   ];
   List<String> Etitle = [
     "Graduation Celebration",

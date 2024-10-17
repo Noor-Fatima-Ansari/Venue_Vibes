@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:venue_vibes/authService.dart';
+import 'package:venue_vibes/decor.dart';
 import 'package:venue_vibes/signUp.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,6 +12,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  AuthService authService = AuthService();
 
   // Validator functions
   String? _validateEmail(String? value) {
@@ -51,35 +55,39 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignupScreen()),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                          foregroundColor: Color(0xFF81717A)),
-                      child: Text(
-                        'SignUp',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignupScreen()),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                            foregroundColor: Color(0xFF81717A)),
+                        child: Text(
+                          'SignUp',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 350),
-                    TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                          foregroundColor: Color(0xFF81717A)),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          decoration: TextDecoration.underline,
+                    SizedBox(width: 30),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                            foregroundColor: Color(0xFF81717A)),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
                     ),
@@ -102,11 +110,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
+                      // if (_formKey.currentState!.validate()) {
+                      //   // Process data
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(content: Text('Login successful')),
+                      //   );
+                      // }
+
                       if (_formKey.currentState!.validate()) {
-                        // Process data
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Login successful')),
-                        );
+                        authService
+                            .singIn(
+                                emailController.text, passwordController.text)
+                            .then((user) {
+                          if (user != null) {
+                            Navigator.push(
+                                (context),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Decor(key: Decor.decorKey)));
+                          }
+                        });
                       }
                     },
                     child: Text(
