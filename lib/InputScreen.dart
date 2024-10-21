@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:venue_vibes/Specify.dart';
 import 'package:venue_vibes/output.dart';
@@ -12,6 +14,13 @@ class InputScreen extends StatefulWidget {
 }
 
 class _FoodEstimationScreenState extends State<InputScreen> {
+  TextEditingController budgetController = TextEditingController();
+  TextEditingController totalController = TextEditingController();
+  TextEditingController maleController = TextEditingController();
+  TextEditingController femaleController = TextEditingController();
+  TextEditingController kidsController = TextEditingController();
+  int budget = 0;
+
   List<String> Cpics = [
     "images/indian.png",
     "images/italian.png",
@@ -26,6 +35,12 @@ class _FoodEstimationScreenState extends State<InputScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    final CollectionReference reference = FirebaseFirestore.instance
+        .collection("User Data")
+        .doc(uid)
+        .collection("Profile Data");
+
     Specify specify = Specify();
     return Scaffold(
       body: SafeArea(
@@ -77,7 +92,8 @@ class _FoodEstimationScreenState extends State<InputScreen> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextField(
+                        child: TextFormField(
+                          controller: budgetController,
                           decoration: InputDecoration(
                             hintText: "Enter your budget for Food",
                             border: OutlineInputBorder(
@@ -91,6 +107,7 @@ class _FoodEstimationScreenState extends State<InputScreen> {
                       ElevatedButton(
                         onPressed: () {
                           // Add set budget logic
+                          budget = budgetController.text as int;
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
@@ -125,7 +142,8 @@ class _FoodEstimationScreenState extends State<InputScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      TextField(
+                      TextFormField(
+                        controller: totalController,
                         decoration: InputDecoration(
                           hintText: "Enter Total Number of People",
                           border: OutlineInputBorder(
@@ -138,9 +156,10 @@ class _FoodEstimationScreenState extends State<InputScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
+                              controller: maleController,
                               decoration: InputDecoration(
-                                hintText: "Number of Adults",
+                                hintText: "Number of Males",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -150,9 +169,10 @@ class _FoodEstimationScreenState extends State<InputScreen> {
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
+                              controller: femaleController,
                               decoration: InputDecoration(
-                                hintText: "Number of Friends",
+                                hintText: "Number of Females",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -162,7 +182,8 @@ class _FoodEstimationScreenState extends State<InputScreen> {
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
+                              controller: kidsController,
                               decoration: InputDecoration(
                                 hintText: "Number of Kids",
                                 border: OutlineInputBorder(
@@ -184,10 +205,20 @@ class _FoodEstimationScreenState extends State<InputScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OutputScreen()));
+                    reference.add({
+                      "Cuisine Type": specify.cuisineType,
+                      "Total People": totalController.text,
+                      "No of Males": maleController.text,
+                      "No of Females": femaleController.text,
+                      "No of Kids": kidsController.text,
+                      "Cuisine Budget": budgetController.text,
+                    }).then((_) => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OutputScreen())));
+
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => OutputScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),

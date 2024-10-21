@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venue_vibes/Specify.dart';
 import 'package:venue_vibes/authService.dart';
 import 'package:venue_vibes/decor.dart';
 import 'package:venue_vibes/login.dart';
@@ -10,6 +11,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+  Specify specify = Specify();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -122,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            buildGreyText('First name'),
+                            specify.buildGreyText('First name'),
                             buildInputField(),
                           ],
                         ),
@@ -132,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            buildGreyText('Last name'),
+                            specify.buildGreyText('Last name'),
                             buildInputField(),
                           ],
                         ),
@@ -140,26 +142,26 @@ class _SignupScreenState extends State<SignupScreen> {
                     ],
                   ),
                   SizedBox(height: 16),
-                  buildGreyText('Email address'),
+                  specify.buildGreyText('Email address'),
                   buildInputField(
                     controller: emailController,
                     validator: _validateEmail,
                   ),
                   SizedBox(height: 16),
-                  buildGreyText('Phone number'),
+                  specify.buildGreyText('Phone number'),
                   buildInputField(
                     controller: phoneController,
                     validator: _validatePhone,
                   ),
                   SizedBox(height: 16),
-                  buildGreyText('Password'),
+                  specify.buildGreyText('Password'),
                   buildInputField(
                     controller: passwordController,
                     obscureText: true,
                     validator: _validatePassword,
                   ),
                   SizedBox(height: 16),
-                  buildGreyText('Confirm password'),
+                  specify.buildGreyText('Confirm password'),
                   buildInputField(
                     controller: confirmPasswordController,
                     obscureText: true,
@@ -244,17 +246,6 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget buildGreyText(String label) {
-    return Text(
-      label,
-      style: TextStyle(
-        color: Colors.grey[700],
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
-
   Widget buildInputField({
     TextEditingController? controller,
     bool obscureText = false,
@@ -270,3 +261,6 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
+
+
+

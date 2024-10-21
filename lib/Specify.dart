@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Specify {
+  String cuisineType = "";
+
   // for cuisine
   Widget buildCardListCuisine(
       String label, List<String> pictureList, List<String> titleList) {
@@ -18,16 +20,14 @@ class Specify {
           height: 150,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount:
-                pictureList.length, // Ensures the lists have matching lengths
+            itemCount: pictureList.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    // Handle the unique onTap for each index
+                    cuisineType = titleList[index];
                     print('Card ${titleList[index]} tapped');
-                    // Add specific functionality for each index here
                   },
                   child: Container(
                     width: 90,
@@ -239,6 +239,18 @@ class Specify {
           ),
         ),
       ],
+    );
+  }
+
+  // grey code
+  Widget buildGreyText(String label) {
+    return Text(
+      label,
+      style: TextStyle(
+        color: Colors.grey[700],
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }
