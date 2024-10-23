@@ -67,6 +67,7 @@ flutter:
   assets:
     - images/virus.png
     - images/arabian.png
+    - images/logo.jpeg
     - images/baby.png
     - images/christmas.png
     - images/d1.png

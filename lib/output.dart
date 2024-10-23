@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:venue_vibes/decor.dart';
 
 class OutputScreen extends StatefulWidget {
-  // final Function(int) onNavigate;
-  // const OutputScreen({super.key, required this.onNavigate});
+  
 
   @override
   State<OutputScreen> createState() => _OutputScreenState();
@@ -30,39 +29,38 @@ class _OutputScreenState extends State<OutputScreen> {
                   ),
                 ),
 
-                Text(
-                  "your board",
+                // Image Board Section
+                const SizedBox(height: 16),
+                const Text(
+                  "Your Board",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 8),
                 Container(
                   height: 200,
                   width: double.infinity,
-                  //color: Color(0xFFEDE6EE),
-                  margin: EdgeInsets.only(bottom: 16),
+                  margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Color(0xFFEDE6EE),
+                    color: const Color(0xFFEDE6EE),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.asset(
-                      "images/output.png", // Use image from picture list
-                      // width: 116,
+                      "images/output.png",
                       height: 100,
-                      fit: BoxFit.cover, // Cover the whole container
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                // Second Container
+
                 Container(
-                  // color: Color(0xFFEDE6EE),
-                  padding: EdgeInsets.all(16.0),
-                  margin: EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Color(0xFFEDE6EE),
+                    color: const Color(0xFFEDE6EE),
                     borderRadius: BorderRadius.circular(12),
                   ),
-
                   child: const Column(
                     children: [
                       Row(
@@ -83,7 +81,6 @@ class _OutputScreenState extends State<OutputScreen> {
                         ],
                       ),
                       SizedBox(height: 8),
-                      // Row 2
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -95,7 +92,6 @@ class _OutputScreenState extends State<OutputScreen> {
                       SizedBox(height: 8),
                       Divider(),
                       SizedBox(height: 8),
-                      // Row 4
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -104,7 +100,6 @@ class _OutputScreenState extends State<OutputScreen> {
                         ],
                       ),
                       SizedBox(height: 8),
-                      // Row 5
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -115,13 +110,13 @@ class _OutputScreenState extends State<OutputScreen> {
                     ],
                   ),
                 ),
-                // Third Container
+
+                // Activities Section
                 Container(
-                  //color: Color(0xFFEDE6EE),
-                  padding: EdgeInsets.all(16.0),
-                  margin: EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Color(0xFFEDE6EE),
+                    color: const Color(0xFFEDE6EE),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Column(
@@ -132,7 +127,6 @@ class _OutputScreenState extends State<OutputScreen> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 8),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -147,7 +141,6 @@ class _OutputScreenState extends State<OutputScreen> {
                         ],
                       ),
                       SizedBox(height: 8),
-                      // Row 3
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -156,7 +149,6 @@ class _OutputScreenState extends State<OutputScreen> {
                         ],
                       ),
                       SizedBox(height: 8),
-                      // Row 4
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -165,7 +157,6 @@ class _OutputScreenState extends State<OutputScreen> {
                         ],
                       ),
                       SizedBox(height: 8),
-                      // Row 5
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -177,6 +168,7 @@ class _OutputScreenState extends State<OutputScreen> {
                   ),
                 ),
 
+                // Save Button
                 ElevatedButton(
                   onPressed: () {
                     if (Decor.decorKey.currentState != null) {
@@ -187,17 +179,18 @@ class _OutputScreenState extends State<OutputScreen> {
                     } else {
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) => Decor(key: Decor.decorKey)),
-                        (route) => false, // Remove all routes before it
+                          builder: (context) => Decor(key: Decor.decorKey),
+                        ),
+                        (route) => false,
                       );
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF81717A),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+                    backgroundColor: const Color(0xFF81717A),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 15),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Save',
                     style: TextStyle(color: Colors.white),
                   ),

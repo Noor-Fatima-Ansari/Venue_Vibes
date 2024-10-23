@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
-import 'package:venue_vibes/decor.dart';
 import 'package:venue_vibes/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -50,15 +48,20 @@ class _SplashScreenState extends State<SplashScreen>
                 child: const Center(
                   child: Image(
                     fit: BoxFit.cover,
-                    image: AssetImage('images/virus.png'),
+                    image: AssetImage('images/logo.jpeg'),
                   ),
                 ),
               ),
               builder: (BuildContext context, Widget? child) {
-                return Transform.rotate(
-                  angle: _controller.value * 2.0 * math.pi,
+                return Transform.scale(
+                  scale: 1.2,
                   child: child,
                 );
+
+                // rotate(
+                //   angle: _controller.value * 2.0 * math.pi,
+                //   child: child,
+                // );
               },
             ),
             SizedBox(

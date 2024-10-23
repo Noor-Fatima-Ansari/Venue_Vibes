@@ -30,11 +30,15 @@ class _PictureDecorState extends State<PictureDecor> {
     "Wedding Celebration",
     "Christmas Celebration",
     "Baby Shower",
-    "Bachlor celebration",
-    "Birthday celebration"
+    "Bachelor Celebration",
+    "Birthday Celebration"
   ];
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
@@ -54,19 +58,21 @@ class _PictureDecorState extends State<PictureDecor> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Budget Section
               const Text(
                 "Budget",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Container(
-                height: 150,
+                height: screenHeight * 0.15, 
                 decoration: BoxDecoration(
                   color: Colors.purple[50],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(screenWidth * 0.02), 
                   child: Row(
                     children: [
                       Expanded(
@@ -97,12 +103,18 @@ class _PictureDecorState extends State<PictureDecor> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Area Selection Section
               Specify().buildCardListArea("Choose Area", Apics, Atitle),
               const SizedBox(height: 20),
+
+              // Event Type Section
               Specify().buildCardListEvent("Event Type", Epics, Etitle),
               const SizedBox(height: 20),
+
+              // Add Photo Section
               Container(
-                height: 150,
+                height: screenHeight * 0.15, 
                 decoration: BoxDecoration(
                   color: Colors.purple[50],
                   borderRadius: BorderRadius.circular(12),
@@ -131,6 +143,8 @@ class _PictureDecorState extends State<PictureDecor> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Generate Button
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -139,7 +153,7 @@ class _PictureDecorState extends State<PictureDecor> {
                   },
                   child: const Text("Generate"),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
+                    minimumSize: Size(double.infinity, screenHeight * 0.07),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

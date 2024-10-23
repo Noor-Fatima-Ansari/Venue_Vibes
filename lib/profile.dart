@@ -11,7 +11,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  List images = [
+  // List of images to be used for the background of each profile card
+  List<String> images = [
     "images/d1.png",
     "images/d2.png",
     "images/d3.png",
@@ -21,7 +22,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the user ID from FirebaseAuth
     final uid = FirebaseAuth.instance.currentUser?.uid;
+    // Firestore reference to the profile data
     final CollectionReference reference = FirebaseFirestore.instance
         .collection("User Data")
         .doc(uid)
@@ -42,146 +45,120 @@ class _ProfileState extends State<Profile> {
             child: StreamBuilder(
               stream: reference.snapshots(),
               builder: (context, snapshot) {
+                // Handle the loading state
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
+                }
+
+                // Handle error state
+                if (snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}"));
-                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text("No data available"));
-                } else {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      var userData = snapshot.data!.docs[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 16),
-                        child: Container(
-                          width: double.infinity,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
+                }
+
+                // Handle empty data state
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text("No profile data available"));
+                }
+
+                // Data is available, show the profile list
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var userData = snapshot.data!.docs[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 16),
+                      child: Container(
+                        width: double.infinity,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Stack(
+                          children: [
+                            // Background image for the card
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.asset(
+                                images[index % images.length],
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                          ),
-                          child: Stack(
-                            children: [
-                              ClipRRect(
+                            ),
+                            // Semi-transparent overlay for text readability
+                            Container(
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  images[index % images.length],
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
+                                color: Colors.black.withOpacity(0.4),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.black.withOpacity(0.4),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        userData["Cuisine Type"] ??
-                                            "Unknown Cuisine",
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                            ),
+                            // Profile info at the bottom
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Cuisine Type
+                                    Text(
+                                      userData["Cuisine Type"] ??
+                                          "Unknown Cuisine",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      const SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              "Budget: ${userData["Cuisine Budget"] ?? 'N/A'}",
-                                              style: const TextStyle(
-                                                color: Colors.white70,
-                                                fontSize: 14,
-                                              ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      children: [
+                                        // Budget
+                                        Expanded(
+                                          child: Text(
+                                            "Budget: ${userData["Cuisine Budget"] ?? 'N/A'}",
+                                            style: const TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: 14,
                                             ),
                                           ),
-                                          IconButton(
-                                            icon: const Icon(Icons.info_outline,
-                                                color: Colors.white),
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: const Text(
-                                                        "Event Details"),
-                                                    content: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        _buildDetailRow(
-                                                            "Total People",
-                                                            userData[
-                                                                    "Total People"] ??
-                                                                "N/A"),
-                                                        _buildDetailRow(
-                                                            "No of Males",
-                                                            userData[
-                                                                    "No of Males"] ??
-                                                                "N/A"),
-                                                        _buildDetailRow(
-                                                            "No of Females",
-                                                            userData[
-                                                                    "No of Females"] ??
-                                                                "N/A"),
-                                                        _buildDetailRow(
-                                                            "No of Kids",
-                                                            userData[
-                                                                    "No of Kids"] ??
-                                                                "N/A"),
-                                                      ],
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                context),
-                                                        child:
-                                                            const Text("Close"),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                        // Info button to display more details
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.info_outline,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            // Show details dialog
+                                            _showEventDetailsDialog(
+                                                context, userData);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  );
-                }
+                      ),
+                    );
+                  },
+                );
               },
             ),
           ),
@@ -190,6 +167,36 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  // Method to show a dialog with event details
+  void _showEventDetailsDialog(BuildContext context, dynamic userData) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Event Details"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildDetailRow(
+                  "Total People", userData["Total People"] ?? "N/A"),
+              _buildDetailRow("No of Males", userData["No of Males"] ?? "N/A"),
+              _buildDetailRow(
+                  "No of Females", userData["No of Females"] ?? "N/A"),
+              _buildDetailRow("No of Kids", userData["No of Kids"] ?? "N/A"),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Method to build a row displaying event details
   Widget _buildDetailRow(String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
